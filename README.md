@@ -9,7 +9,7 @@ Data
 
 The data for this assignment are available from the course web site as a single zip file:
 
-* [https://github.com/rdpeng/ExData_Plotting1](Data for Peer Assessment [29Mb])
+* [Data for Peer Assessment [29Mb]](https://github.com/rdpeng/ExData_Plotting1)
 
 The zip file contains two files:
 
