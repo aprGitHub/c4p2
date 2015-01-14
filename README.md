@@ -54,7 +54,7 @@ You must address the following questions and tasks in your exploratory analysis.
 ![show plot1](plot1.png)
 
 ### Question 2
-<b>Have total emissions from PM2.5 decreased in the  <b>Baltimore City, Maryland </b> (`fips == "24510"`) from 1999 to 2008? Use the base plotting system to make a plot answering this question.<b>
+<b>Have total emissions from PM2.5 decreased in the  <b>Baltimore City, Maryland </b> (`fips == "24510"`) from 1999 to 2008? Use the base plotting system to make a plot answering this question.</b>
 This is the content of my `plot2.R` file (whatch out! it is far from being elegant:( but it works:)
 ```{r}
 # 1. Ad-hoc function to download the data for this exercise 
