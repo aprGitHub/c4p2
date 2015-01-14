@@ -53,6 +53,7 @@ You must address the following questions and tasks in your exploratory analysis.
 ![show plot1](plot1.png)
 
 2. Have total emissions from PM2.5 decreased in the  <b>Baltimore City, Maryland </b> (`fips == "24510"`) from 1999 to 2008? Use the base plotting system to make a plot answering this question.
+![show plot2.R](plot2.R)
 ![show plot2](plot2.png)
 
 3. Of the four types of sources indicated by the type (point, nonpoint, onroad, nonroad) variable, which of these four sources have seen decreases in emissions from 1999–2008 for Baltimore City? Which have seen increases in emissions from 1999–2008? Use the `ggplot2` plotting system to make a plot answer this question.
