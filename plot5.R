@@ -1,6 +1,4 @@
-# 6. Compare emissions from motor vehicle sources in Baltimore City (fips == "24510")
-# with emissions from motor vehicle sources in Los Angeles County, California ( fips == "06037" ). 
-# Which city has seen greater changes over time in motor vehicle emissions?
+# 5. How have emissions from motor vehicle sources changed from 1999–2008 in Baltimore City?
 library(plyr)
 library(ggplot2)
 ################################
@@ -56,20 +54,20 @@ rm(NEIsub,SCCsub) # Remove the object (otherwise my old laptop may run out of me
 
 
 # 4. Get the instances associated to COAL
-dataBaltimoreLosAngelesVehicles <- subset(data, 
-                                          subset=grepl("24510|06037",data$fips)&grepl("Vehicles",data$EI.Sector, ignore.case = TRUE),
-                                          select=c(year,Emissions,fips)) 
+dataBaltimoreVehicles <- subset(data, 
+                                    subset=grepl("24510",data$fips)&grepl("Vehicles",data$EI.Sector, ignore.case = TRUE),
+                                    select=c(year,Emissions)) 
 rm(data) # Remove the object (otherwise my old laptop may run out of memory:)
 
 
 # 5. Get the sum of the emissions by year  
-dataBaltimoreLosAngelesVehiclesArranged <- ddply(dataBaltimoreLosAngelesVehicles, .(year,fips), summarise, sumEmissions = sum(Emissions, na.rm = TRUE))
+dataBaltimoreVehiclesArranged <- ddply(dataBaltimoreVehicles, .(year), summarise, sumEmissions = sum(Emissions, na.rm = TRUE))
 
 # 6. Plot and save the file
-lp <- ggplot(data=dataBaltimoreLosAngelesVehiclesArranged, aes(x=year, y=sumEmissions,shape=fips,group=fips)) + geom_point(aes(colour=fips)) + geom_line(aes(colour=fips)) + ggtitle("Emissions from motor vehicle sources") # Basic plot
+lp <- ggplot(data=dataBaltimoreVehiclesArranged, aes(x=year, y=sumEmissions)) + geom_point() + geom_line( ) + ggtitle("Emissions from motor vehicle sources in Baltimore") # Basic plot
 lp # show the result
-lp <- lp + scale_colour_discrete(name  ="City",breaks=c("06037", "24510"),labels=c("Los Angeles", "Baltimore"))+ scale_shape_discrete(name  ="City",breaks=c("06037", "24510"),labels=c("Los Angeles", "Baltimore")) # Arrange the legend
-lp # show the result
+# lp <- lp + scale_colour_discrete(name  ="City",breaks=c("06037", "24510"),labels=c("Los Angeles", "Baltimore"))+ scale_shape_discrete(name  ="City",breaks=c("06037", "24510"),labels=c("Los Angeles", "Baltimore")) # Arrange the legend
+# lp # show the result
 lp <- lp + ylab("Emissions") # arrange the y-label
 lp # show the result
 
