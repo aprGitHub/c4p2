@@ -73,7 +73,7 @@ lp # show the result
 lp <- lp + ylab("Emissions") # arrange the y-label
 lp # show the result
 
-pngFile <- "plot5.png"
+pngFile <- "plot6.png"
 dev.copy(png, file = pngFile,  bg = "white")
 dev.off()
 ###################################

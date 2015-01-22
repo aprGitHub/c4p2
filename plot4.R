@@ -49,11 +49,11 @@ NEIsub <- subset(NEI,select=-c(Pollutant)) # remove Pollutant because it is redu
 rm(NEI,SCC) # Remove the object (otherwise my old laptop may run out of memory:)
 
 data <- merge(SCCsub, NEIsub,by="SCC") 
-#rm(NEIsub,SCCsub) # Remove the object (otherwise my old laptop may run out of memory:)
+rm(NEIsub,SCCsub) # Remove the object (otherwise my old laptop may run out of memory:)
 
 # 4. Get the instances associated to COAL
 dataCoal <- subset(data, subset=grepl("Coal",data$EI.Sector, ignore.case = TRUE))
-
+rm(data)
 
 # 5. Get the sum of the emissions by year  
 # THIS CHOICE GOES WITH: dataCoalArranged <- ddply(dataCoal, .(year), summarise, sumEmissions = sum(Emissions, na.rm = TRUE))
