@@ -60,7 +60,7 @@ You must address the following questions and tasks in your exploratory analysis.
 ### Question 1
 <b>Have total emissions from PM2.5 decreased in the United States from 1999 to 2008? Using the base plotting system, make a plot showing the total PM2.5 emission from all sources for each of the years 1999, 2002, 2005, and 2008.</b>
 
-The code to tackle this is as follows:
+I propose the following code to tackle this question (I bet that there are shorter and clearer solutions:)
 ```{r}
 # ROUTINE: plot1.R
 library(plyr)
@@ -152,7 +152,7 @@ For each plot you should:
 * Copy and paste the R code from the corresponding R file into the text box at the appropriate point in the peer assessment.
 
 # R Code
-There is a sub-routine (`downloadAndUnzip.R`) that allows to download, unzip, and load the data into an R object, a data frame, that combines both NEI and SCC. The function was made ad-hoc for this particular data. This sub-routine is being used for all the routines required in this assignment: `plot1.R`,..., `plot6.R` (see line `source("downloadAndUnzip.R")`). Next, each routine works with a particular sub-set of the data and the required plot is yielded.
+In this folder there is a sub-routine (`downloadAndUnzip.R`) that allows to download, unzip, and load the data into an R object, a data frame, that combines both NEI and SCC. The function was made ad-hoc for this particular task. This sub-routine is being used for all the routines required in this assignment, namely: `plot1.R`,..., `plot6.R`. Note that the code is included in all of them  (see `source("downloadAndUnzip.R")`) and indeed, there is a call to the sub-routine defined there (see the asignment `data <- downloadAndUnzip()` in all the routines). Next, each routine (`plot1.R`,..., `plot6.R`) works with a particular sub-set of the data and the required plot is yielded.
 
 ```{r}
 ################################
