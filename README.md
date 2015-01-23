@@ -11,9 +11,9 @@ The data for this assignment are available from the course web site as a single 
 
 * [Data for Peer Assessment [29Mb]](https://github.com/rdpeng/ExData_Plotting1)
 
-The zip file contains two files: `summarySCC_PM25.rds` and `Source_Classification_Code.rds`. Their content is thoroughly described in the following subsections.
+The zip file contains two files: `summarySCC_PM25.rds` and `Source_Classification_Code.rds`. The content of each file is as follows:
 
-## <b>1. PM2.5 Emissions Data (`summarySCC_PM25.rds`):</b>
+1. <b> PM2.5 Emissions Data (`summarySCC_PM25.rds`):</b>
 This file contains a data frame with all of the PM2.5 emissions data for 1999, 2002, 2005, and 2008. For each year, the table contains number of tons of PM2.5 emitted from a specific type of source for the entire year. Here are the first few rows.
 ```{r}
 ##     fips      SCC Pollutant Emissions  type year
@@ -32,10 +32,11 @@ Each instance is described by the following attributes:
 * type: The type of source (point, non-point, on-road, or non-road)
 * year: The year of emissions recorded
 
-## <b>2. Source Classification Code Table (`Source_Classification_Code.rds`):</b>
+2. <b> Source Classification Code Table (`Source_Classification_Code.rds`):</b>
 This table provides a mapping from the SCC digit strings in the Emissions table to the actual name of the PM2.5 source. The sources are categorized in a few different ways from more general to more specific and you may choose to explore whatever categories you think are most useful. For example, source “10100101” is known as “Ext Comb /Electric Gen /Anthracite Coal /Pulverized Coal”.
 
 
+<b>Reading `.rds` files</b>
 You can read each of the two files using the readRDS() function in R. For example, reading in each file can be done with the following code:
 ```{r}
 ## This first line will likely take a few seconds. Be patient!
