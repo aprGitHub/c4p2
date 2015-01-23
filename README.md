@@ -59,44 +59,33 @@ You must address the following questions and tasks in your exploratory analysis.
 
 ### Question 1
 <b>Have total emissions from PM2.5 decreased in the United States from 1999 to 2008? Using the base plotting system, make a plot showing the total PM2.5 emission from all sources for each of the years 1999, 2002, 2005, and 2008.</b>
+
+The code to tackle this is as follows:
+```{r}
+# ROUTINE: plot1.R
+library(plyr)
+source("downloadAndUnzip.R")
+# 1. Ad-hoc function to download the data for this exercise 
+data <- downloadAndUnzip()
+
+# 2. Get the sub-set required, summing up the Emmissions 
+dataSumEmissionsByYear <- ddply(data, .(year), summarise, sumEmissions = sum(Emissions, na.rm = TRUE))
+#rm(data) # Remove the object (otherwise my old laptop may run out of memory:)
+
+# 3. Plot and save the file
+plot(dataSumEmissionsByYear$year,dataSumEmissionsByYear$sumEmissions,type="b",xlab="Year",ylab="PM25-PRI Emissions",main="Emissions by Year")
+pngFile <- "plot1.png"
+dev.copy(png, file = pngFile,  bg = "white")
+dev.off()
+```
+
+
 ![show plot1](plot1.png)
 
 ### Question 2
 <b>Have total emissions from PM2.5 decreased in the  <b>Baltimore City, Maryland </b> (`fips == "24510"`) from 1999 to 2008? Use the base plotting system to make a plot answering this question.</b>
 
-This is the content of my `plot2.R` file (whatch out! it is far from being elegant:( but it works:)
 
-```{r}
-# 1. Ad-hoc function to download the data for this exercise 
-downloadFromURLAndUnzip()
-
-# 2. Read the data into R objects. This first line will likely take a few seconds. Be patient!
-NEI <- readRDS("./data/summarySCC_PM25.rds")
-SCC <- readRDS("./data/Source_Classification_Code.rds")
-
-# 3. Merge the data add the Short.Name related to the SCC code
-SCCsub <- subset(SCC,select=c(SCC,Short.Name))
-NEIsub <- subset(NEI,select=-c(Pollutant))# remove Pollutant because it is redundant: unique(data$Pollutant)="PM25-PRI" allways
-rm(NEI,SCC) # Remove the object (otherwise my old laptop may run out of memory:)
-
-data <- merge(SCCsub, NEIsub,by="SCC") 
-rm(NEIsub,NEIsub) # Remove the object (otherwise my old laptop may run out of memory:)
-
-# 4. Get the data associated to Baltimore (i.e. fips == "24510")
-dataBaltimore <- subset(data, fips == "24510",select=c(year, Emissions)) # 
-rm(data)
-
-# 5. Get the sum of the emissions by year
-dataSumEmissionsByYear <- ddply(dataBaltimore, .(year), summarise, sumEmissions = sum(Emissions, na.rm = TRUE))
-
-# 6. Plot and save the file
-plot(dataSumEmissionsByYear$year,dataSumEmissionsByYear$sumEmissions,type="b",xlab="Year",ylab="PM25-PRI Emissions",main="Emissions by Year in Baltimore City")
-# TO-DO: tidy up the x axis
-
-pngFile <- "plot2.png"
-dev.copy(png, file = pngFile,  bg = "white")
-dev.off()
-```
 
 And the `plot2.R` generated is as follows:
 
@@ -124,6 +113,38 @@ There are some things pending, such as tidying up the x axis.
 ### Question 6
 <b>Compare emissions from motor vehicle sources in <b>Baltimore City</b> with emissions from motor vehicle sources in  <b>Los Angeles County, California </b> (`fips == "06037"`). Which city has seen greater changes over time in motor vehicle emissions?</b>
 
+```{r}
+# ROUTINE: plot6.R
+library(plyr)
+library(ggplot2)
+
+# 0. Load the data
+source("downloadAndUnzip.R")
+
+# 1. Ad-hoc function to download the data for this exercise 
+data <- downloadAndUnzip()
+
+# 2. Get the instances associated to either Baltimore or Los Angeles, and caused by Vehicles 
+data_B_LA_Vehcles <- subset(data, subset=grepl("24510|06037",data$fips) & grepl("Vehicles",data$EI.Sector, ignore.case = TRUE), select=c(year,Emissions,fips)) 
+rm(data) # Remove the object (otherwise my old laptop may run out of memory:)
+
+# 3. Get the sum of the emissions by year  
+data_B_LA_VehclesArranged <- ddply(data_B_LA_Vehcles, .(year,fips), summarise, sumEmissions = sum(Emissions, na.rm = TRUE))
+
+# 4. Plot and save the file
+lp <- ggplot(data=data_B_LA_VehclesArranged, aes(x=year, y=sumEmissions,shape=fips,group=fips)) 
+      + geom_point(aes(colour=fips)) + geom_line(aes(colour=fips)) 
+      + ggtitle("Emissions from motor vehicle sources") 
+      + scale_colour_discrete(name  ="City",breaks=c("06037", "24510"),labels=c("Los Angeles", "Baltimore"))
+      + scale_shape_discrete(name  ="City",breaks=c("06037", "24510"),labels=c("Los Angeles", "Baltimore")) 
+      + ylab("Emissions") # arrange the y-label
+lp # show the result
+
+pngFile <- "plot6.png"
+dev.copy(png, file = pngFile,  bg = "white")
+dev.off()
+```
+
 ![show plot6](plot6.png)
 
 
@@ -136,4 +157,49 @@ For each plot you should:
 * Copy and paste the R code from the corresponding R file into the text box at the appropriate point in the peer assessment.
 
 # R Code
-There is a sub-routine (`downloadAndUnzip.R`) that allows to download, unzip, and load the data into an R object, a data frame, that combines both NEI and SCC. The function was made ad-hoc for this particular data. This sub-routine is being used for all the routines required in this assignment: `plot1.R`, `plot2.R`, etc. Next, each routine works with a particular sub-set of the data.
+There is a sub-routine (`downloadAndUnzip.R`) that allows to download, unzip, and load the data into an R object, a data frame, that combines both NEI and SCC. The function was made ad-hoc for this particular data. This sub-routine is being used for all the routines required in this assignment: `plot1.R`,..., `plot6.R` (see line `source("downloadAndUnzip.R")`). Next, each routine works with a particular sub-set of the data and the required plot is yielded.
+
+```{r}
+################################
+# SUB-ROUTINE: downloadAndUnzip
+# Ad-hoc routine to download and unzip (if it was not done before) the data 
+# from "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip"
+# It merges both data files (NEI, SCC) into a data frame that is returned
+downloadAndUnzip <- function() 
+{
+  # SET HERE THE VARIABLES:
+  workdirPath <- "./data"
+  fileUrl <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip"
+  destZipFile <- paste(paste(workdirPath,"exdata_Fdata_FNEI_data.zip", sep="/"))
+  # The aforementioned zip should contain two rds files that should be placed in the following path
+  NEIfile <- paste(workdirPath,"summarySCC_PM25.rds", sep="/")
+  SCCfile <- paste(workdirPath,"Source_Classification_Code.rds", sep="/")
+  
+  
+  ## Step 1: Create the directory if necessary
+  if(!file.exists(workdirPath))
+  {
+    dir.create(workdirPath)
+  }
+  
+  ## Step 2: Download and unzip the files if necessary
+  if(!(file.exists(NEIfile)&file.exists(SCCfile)))
+  {
+    download.file(fileUrl, destfile=destZipFile, method="curl")
+    unzip(zipfile=destZipFile, exdir=workdirPath) 
+    dateDownloaded <- date()
+    print(paste("INFO: the data file was downloaded on: ", dateDownloaded))
+  }
+  
+  ## Step 3: Read the data into R objects. This first line will likely take a few seconds. Be patient!
+  NEI <- readRDS(NEIfile)
+  SCC <- readRDS(SCCfile)
+  
+  ## Step 4:  Merge the data 
+  data <- merge(SCC,NEI,by="SCC")
+  
+  # 4. Return the data
+  return(data)
+}
+```
+
