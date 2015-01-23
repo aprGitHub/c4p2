@@ -129,7 +129,7 @@ data_B_LA_VehclesArranged <- ddply(data_B_LA_Vehcles, .(year,fips), summarise, s
 lp <- ggplot(data=data_B_LA_VehclesArranged, aes(x=year, y=sumEmissions,shape=fips,group=fips)) 
       + geom_point(aes(colour=fips)) + geom_line(aes(colour=fips)) 
       + ggtitle("Emissions from motor vehicle sources") 
-      + scale_colour_discrete(name  ="City",breaks=c("06037", "24510"),labels=c("Los Angeles", "Baltimore"))
+      + scale_colour_discrete(name ="City",breaks=c("06037", "24510"),labels=c("Los Angeles", "Baltimore"))
       + scale_shape_discrete(name  ="City",breaks=c("06037", "24510"),labels=c("Los Angeles", "Baltimore")) 
       + ylab("Emissions") # arrange the y-label
 lp # show the result
