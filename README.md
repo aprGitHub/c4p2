@@ -64,8 +64,9 @@ I propose the following code to tackle this question (I bet that there are short
 ```{r}
 # ROUTINE: plot1.R
 library(plyr)
-source("downloadAndUnzip.R")
+
 # 1. Ad-hoc function to download the data for this exercise 
+source("downloadAndUnzip.R")
 data <- downloadAndUnzip()
 
 # 2. Get the sub-set required, summing up the Emmissions 
