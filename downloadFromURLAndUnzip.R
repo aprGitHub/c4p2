@@ -1,5 +1,9 @@
-# Ad-hoc routine to download and unzip (if it was not done before) the data from "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip"
-downloadFromURLAndUnzip <- function() 
+################################
+# SUB-ROUTINE: downloadAndUnzip
+# Ad-hoc routine to download and unzip (if it was not done before) the data 
+# from "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip"
+# It merges both data files (NEI, SCC) into a data frame that is returned
+downloadAndUnzip <- function() 
 {
   # SET HERE THE VARIABLES:
   workdirPath <- "./data"
@@ -22,7 +26,16 @@ downloadFromURLAndUnzip <- function()
     download.file(fileUrl, destfile=destZipFile, method="curl")
     unzip(zipfile=destZipFile, exdir=workdirPath) 
     dateDownloaded <- date()
-    print(paste("INFO: the data file downloaded on: ", dateDownloaded))
-   }
-  print("Download and Unzip: Done!")
+    print(paste("INFO: the data file was downloaded on: ", dateDownloaded))
+  }
+  
+  ## Step 3: Read the data into R objects. This first line will likely take a few seconds. Be patient!
+  NEI <- readRDS(NEIfile)
+  SCC <- readRDS(SCCfile)
+  
+  ## Step 4:  Merge the data 
+  data <- merge(SCC,NEI,by="SCC")
+  
+  # 4. Return the data
+  return(data)
 }
