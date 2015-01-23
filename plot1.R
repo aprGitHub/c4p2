@@ -1,23 +1,22 @@
+################################
+# QUESTION 1: Have total emissions from PM2.5 decreased in the United States from 1999 to 2008? 
+# Using the base plotting system, make a plot showing the total PM2.5 emission from all sources for each of the years 1999, 2002, 2005, and 2008. 
+# For deeper explanation turn to: https://github.com/aprGitHub/c4p2
+################################
 library(plyr)
-source("downloadFromURLAndUnzip.R")
+###################################
+# MAIN ROUTINE: plot1.R
+# 1. Ad-hoc function to download the data for this exercise, be patient, it takes a while:-! 
+source("downloadAndUnzip.R")
+data <- downloadAndUnzip()
 
-# 1. Ad-hoc function to download the data for this exercise 
-downloadFromURLAndUnzip()
+# 2. Get the sub-set required, summing up the Emmissions 
+dataSumEmissionsByYear <- ddply(data, .(year), summarise, sumEmissions = sum(Emissions, na.rm = TRUE))
+rm(data) # Remove the object (otherwise my old laptop may run out of memory:)
 
-# 2. Read the data into R objects. This first line will likely take a few seconds. Be patient!
-NEI <- readRDS("./data/summarySCC_PM25.rds")
-SCC <- readRDS("./data/Source_Classification_Code.rds")
-
-# 3. Merge the data add the Short.Name related to the SCC code
-SCCSubset<-subset(SCC,select=c(SCC,Short.Name))
-data<-merge(SCCSubset,NEI,by="SCC")
-#dataSumEmissionsByYear <- ddply(data, .(year), summarise, sumEmissions = sum(Emissions, na.rm = TRUE))
-dataSumEmissionsByYear <- ddply(data, .(year), sumEmissions = sum(Emissions, na.rm = TRUE))
-# 4. Remove the object (otherwise my old laptop may run out of memory:)
-rm(data)
-
-# 5. Plot and save the file
+# 3. Plot and save the file
 plot(dataSumEmissionsByYear$year,dataSumEmissionsByYear$sumEmissions,type="b",xlab="Year",ylab="PM25-PRI Emissions",main="Emissions by Year")
 pngFile <- "plot1.png"
 dev.copy(png, file = pngFile,  bg = "white")
 dev.off()
+###################################
