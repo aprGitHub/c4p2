@@ -79,15 +79,10 @@ dev.copy(png, file = pngFile,  bg = "white")
 dev.off()
 ```
 
-
 ![show plot1](plot1.png)
 
 ### Question 2
 <b>Have total emissions from PM2.5 decreased in the  <b>Baltimore City, Maryland </b> (`fips == "24510"`) from 1999 to 2008? Use the base plotting system to make a plot answering this question.</b>
-
-
-
-And the `plot2.R` generated is as follows:
 
 ![show plot2](plot2.png)
 
