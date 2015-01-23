@@ -16,15 +16,11 @@ dataCoal <- subset(data, subset=grepl("Coal",data$EI.Sector, ignore.case = TRUE)
 rm(data)
 
 # 3. Get the sum of the emissions by year  
-# 1st choice: 
 dataCoalArranged <- ddply(dataCoal, .(year), summarise, sumEmissions = sum(Emissions, na.rm = TRUE))
-# 2nd choice: dataCoalArranged <- aggregate(Emissions ~ year, data=dataCoal, sum)
 
 # 4. Plot and save the file
-# 1st choice: qplot(dataCoalArranged$year,dataCoalArranged$sumEmissions, geom="line",xlab="Year",ylab="PM25-PRI Emissions",main="Emissions from coal combustion")
-# 2nd choice: qplot(dataCoalArranged$year,dataCoalArranged$Emissions, geom="line",xlab="Year",ylab="PM25-PRI Emissions",main="Emissions from coal combustion")
-
 ggplot(data=dataCoalArranged, aes(x=year, y=sumEmissions))  + geom_point() + geom_line( ) + ggtitle("Emissions from coal combustion") + xlab("Year") + ylab("PM25-PRI Emissions")
+
 pngFile <- "plot4.png"
 dev.copy(png, file = pngFile,  bg = "white")
 dev.off()
