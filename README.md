@@ -50,12 +50,14 @@ The overall goal of this assignment is to explore the National Emissions Invento
 You must address the following questions and tasks in your exploratory analysis. For each question/task you will need to make a single plot. Unless specified, you can use any plotting system in R to make your plot.
 
 ### Question 1
-<b>Have total emissions from PM2.5 decreased in the United States from 1999 to 2008? Using the base plotting system, make a plot showing the total PM2.5 emission from all sources for each of the years 1999, 2002, 2005, and 2008.<b>
+<b>Have total emissions from PM2.5 decreased in the United States from 1999 to 2008? Using the base plotting system, make a plot showing the total PM2.5 emission from all sources for each of the years 1999, 2002, 2005, and 2008.</b>
 ![show plot1](plot1.png)
 
 ### Question 2
 <b>Have total emissions from PM2.5 decreased in the  <b>Baltimore City, Maryland </b> (`fips == "24510"`) from 1999 to 2008? Use the base plotting system to make a plot answering this question.</b>
+
 This is the content of my `plot2.R` file (whatch out! it is far from being elegant:( but it works:)
+
 ```{r}
 # 1. Ad-hoc function to download the data for this exercise 
 downloadFromURLAndUnzip()
@@ -87,21 +89,32 @@ pngFile <- "plot2.png"
 dev.copy(png, file = pngFile,  bg = "white")
 dev.off()
 ```
+
 And the `plot2.R` generated is as follows:
 ![show plot2](plot2.png)
 There are some things pending, such as tidying up the x axis.
 
 ### Question 3
-Of the four types of sources indicated by the type (point, nonpoint, onroad, nonroad) variable, which of these four sources have seen decreases in emissions from 1999–2008 for Baltimore City? Which have seen increases in emissions from 1999–2008? Use the `ggplot2` plotting system to make a plot answer this question.
+<b>Of the four types of sources indicated by the type (point, nonpoint, onroad, nonroad) variable, which of these four sources have seen decreases in emissions from 1999–2008 for Baltimore City? Which have seen increases in emissions from 1999–2008? Use the `ggplot2` plotting system to make a plot answer this question.</b>
+
+![show plot3](plot3.png)
+
 
 ### Question 4 
-Across the United States, how have emissions from coal combustion-related sources changed from 1999–2008?
+<b>Across the United States, how have emissions from coal combustion-related sources changed from 1999–2008?</b>
+
+![show plot4](plot4.png)
 
 ### Question 5
-How have emissions from motor vehicle sources changed from 1999–2008 in Baltimore City?
+<b>How have emissions from motor vehicle sources changed from 1999–2008 in Baltimore City?</b>
+
+![show plot5](plot5.png)
+
 
 ### Question 6
-Compare emissions from motor vehicle sources in <b>Baltimore City</b> with emissions from motor vehicle sources in  <b>Los Angeles County, California </b> (`fips == "06037"`). Which city has seen greater changes over time in motor vehicle emissions?
+<b>Compare emissions from motor vehicle sources in <b>Baltimore City</b> with emissions from motor vehicle sources in  <b>Los Angeles County, California </b> (`fips == "06037"`). Which city has seen greater changes over time in motor vehicle emissions?</b>
+
+![show plot5](plot5.png)
 
 
 ## Making and Submitting Plots
@@ -112,3 +125,5 @@ For each plot you should:
 * Upload the PNG file on the Assignment submission page
 * Copy and paste the R code from the corresponding R file into the text box at the appropriate point in the peer assessment.
 
+# R Code
+There is a sub-routine (`downloadAndUnzip.R`) that allows to download, unzip, and load the data into an R object, a data frame, that combines both NEI and SCC. The function was made ad-hoc for this particular data. This sub-routine is being used for all the routines required in this assignment: `plot1.R`, `plot2.R`, etc. Next, each routine works with a particular sub-set of the data.
