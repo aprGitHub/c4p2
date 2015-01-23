@@ -120,7 +120,7 @@ There are some things pending, such as tidying up the x axis.
 ### Question 6
 <b>Compare emissions from motor vehicle sources in <b>Baltimore City</b> with emissions from motor vehicle sources in  <b>Los Angeles County, California </b> (`fips == "06037"`). Which city has seen greater changes over time in motor vehicle emissions?</b>
 
-![show plot5](plot5.png)
+![show plot6](plot6.png)
 
 
 ## Making and Submitting Plots
