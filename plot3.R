@@ -14,7 +14,7 @@ data <- downloadAndUnzip()
 
 # 2. Get the data associated to Baltimore (i.e. fips == "24510")
 dataBaltimore <- subset(data, fips == "24510",select=c(year, type, Emissions)) 
-# rm(data)
+rm(data)
 
 # 3. Get the sum of the emissions by year  
 dataSumEmissionsByYearType <- ddply(dataBaltimore, .(year,type), summarise, sumEmissions = sum(Emissions, na.rm = TRUE))
