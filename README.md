@@ -113,10 +113,8 @@ There are some things pending, such as tidying up the x axis.
 library(plyr)
 library(ggplot2)
 
-# 0. Load the data
-source("downloadAndUnzip.R")
-
 # 1. Ad-hoc function to download the data for this exercise 
+source("downloadAndUnzip.R")
 data <- downloadAndUnzip()
 
 # 2. Get the instances associated to either Baltimore or Los Angeles, and caused by Vehicles 
