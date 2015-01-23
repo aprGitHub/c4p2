@@ -198,7 +198,7 @@ downloadAndUnzip <- function()
   ## Step 4:  Merge the data 
   data <- merge(SCC,NEI,by="SCC")
   
-  # 4. Return the data
+  ## Step 5: Return the data
   return(data)
 }
 ```
