@@ -70,7 +70,7 @@ data <- downloadAndUnzip()
 
 # 2. Get the sub-set required, summing up the Emmissions 
 dataSumEmissionsByYear <- ddply(data, .(year), summarise, sumEmissions = sum(Emissions, na.rm = TRUE))
-#rm(data) # Remove the object (otherwise my old laptop may run out of memory:)
+rm(data) # Remove the object (otherwise my old laptop may run out of memory:)
 
 # 3. Plot and save the file
 plot(dataSumEmissionsByYear$year,dataSumEmissionsByYear$sumEmissions,type="b",xlab="Year",ylab="PM25-PRI Emissions",main="Emissions by Year")
